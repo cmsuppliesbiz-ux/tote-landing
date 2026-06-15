@@ -1554,13 +1554,17 @@ section{position:relative}
 
 <script>
 (function(){
+  // Read geometry before any DOM writes to avoid forced reflow
+  var scrolledAtLoad = window.scrollY > 24;
+
   // Year
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // Nav scroll state
   var nav = document.getElementById('nav');
   var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 24); };
-  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+  nav.classList.toggle('scrolled', scrolledAtLoad);
+  window.addEventListener('scroll', onScroll, {passive:true});
 
   // Mobile menu
   var burger = document.getElementById('burger');
